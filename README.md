@@ -93,18 +93,16 @@ define( 'SETTINGS', [
 ```sql
 CREATE TABLE IF NOT EXISTS `code` (
   `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `code` char(5) COLLATE latin1_bin NOT NULL,
-  `url` varchar(4096) COLLATE latin1_bin DEFAULT NULL,
+  `code` char(5) COLLATE ascii_bin NOT NULL,
+  `url` varchar(4096) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `last_used` datetime NOT NULL DEFAULT current_timestamp(),
   `hits` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `url_md5_l` bigint(20) UNSIGNED GENERATED ALWAYS AS (conv(left(md5(`url`),16),16,10)) STORED,
-  `url_md5_r` bigint(20) UNSIGNED GENERATED ALWAYS AS (conv(right(md5(`url`),16),16,10)) STORED,
   PRIMARY KEY (`code`) USING HASH
 ) ENGINE=Aria DEFAULT CHARSET=latin1 COLLATE=latin1_bin PACK_KEYS=0;
 
 CREATE TABLE `user` (
   `id` int(10) NOT NULL,
-  `username` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `vorname` varchar(30) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `nachname` varchar(30) COLLATE utf8mb4_unicode_520_ci NOT NULL,
   `hash` varchar(255) CHARACTER SET ascii COLLATE ascii_bin DEFAULT NULL,
