@@ -1,0 +1,12 @@
+{
+  "require": {
+    "kingsoft/persist-rest": "^2.9",
+    "kingsoft/monolog-handler": "^1.0",
+    "kingsoft/persist-db": "^2.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kingsoft\\LinkQr\\": "D:/Projekten/theking2/Kingsoft/link-qr/classes/Kingsoft/LinkQr/"
+    }
+  }
+}
