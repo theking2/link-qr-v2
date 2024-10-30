@@ -11,8 +11,8 @@ use Kingsoft\PersistRest\{PersistRest, PersistRequest};
 
 try {
   $request = new PersistRequest(
-    ['Code'],
-    "GET, POST",
+    [ 'Code' ],
+    implode( ',',SETTINGS[ 'api' ][ 'allowedmethods' ]),
     "*",
     2
   );
