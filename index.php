@@ -35,7 +35,6 @@ define( 'BASE_URL',
 	(($_SERVER['SERVER_PORT'] == 443) ? '' : ':' . $_SERVER['SERVER_PORT']) .
 	'/' 
 );
-define('DEFAULT_URL', $settings['default_url']);
 
 if (!array_key_exists('user_id', $_SESSION??[])) {
 	header('Location:./logon');
@@ -59,12 +58,12 @@ if( array_key_exists('url', $_GET) and (false === strpos($_GET['url'], BASE_URL)
 		if ($code = $select->fetchColumn()) {
 			$url = BASE_URL . $code;
 		} else {
-			$url = DEFAULT_URL;
+			$url = SETTINGS['default_url'];
 		}
 	}
 } else {
 	// nothing to do get the default
-	$url = $full_url = DEFAULT_URL;
+	$url = $full_url = SETTINGS['default_url'];
 }
 //var_dump($_GET);
 

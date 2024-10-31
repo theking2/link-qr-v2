@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
-require_once '../inc/session.inc.php';
-require_once '../inc/settings.inc.php';
-require_once '../inc/connect.inc.php';
-require_once '../inc/utils.inc.php';
+require_once '../config.php';
+require_once ROOT . 'inc/session.inc.php';
+require_once ROOT . 'inc/utils.inc.php';
 
 const SENDER_EMAIL = 'hostmaster@king.ma';
 const SEND_PWD_TEMPLATE = '<html>

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
+require_once '../config.php';
+require_once ROOT . 'inc/session.inc.php';
+require_once ROOT . 'inc/utils.inc.php';
 
-use Persist\DB\Database;
-
-require_once '../inc/session.inc.php';
-require_once '../inc/utils.inc.php';
-require_once '../inc/settings.inc.php';
+use \Kingsoft\Db\Database;
+use \Kingsoft\LinkQr\{User, UserEmail};
 
 $messages = [];
 $email = '';
@@ -15,9 +15,8 @@ if( isset($_POST['action']) ) {
     /**
      * a user was logged on use the username to find the user
      * In this case we can change the email adress
-     * @var \Link\User $user
      */
-    $user = \Link\User::find(where: ['username' => $_SESSION['username']]);
+    $user = User::find(where: ['username' => $_SESSION['username']]);
     if( is_null($user) ) {
       $messages[] = "Benutzername nicht gefunden";
 
@@ -31,9 +30,8 @@ if( isset($_POST['action']) ) {
   } else {
     /**
      * find user by email if provided
-     * @var \Link\User $user
      */
-    if (is_null( $user = \Link\UserEmail::find(where: ['email'=> $_POST['email']]) )) {
+    if (is_null( $user = UserEmail::find(where: ['email'=> $_POST['email']]) )) {
       $messages[] = "Email Adresse nicht gefunden";
 
     } else {
@@ -102,7 +100,7 @@ function check_email_unique(string $email):bool {
   $last = Database::getConnection()->prepare("select email from vw_user_email where username=:username");
   $last-> execute(['username'=> $_SESSION['username'] ]);
   if($email === $last-> fetchColumn() ) {
-    $user_email = \Link\UserEmail::find(where: ['username'=> $_SESSION['username'],'email' => $email]);
+    $user_email = UserEmail::find(where: ['username'=> $_SESSION['username'],'email' => $email]);
     $user_email-> createUUID();
     $user_email-> freeze();
 
@@ -113,7 +111,7 @@ function check_email_unique(string $email):bool {
   }
 
   // check if email was in use by current user
-  $user_email = \Link\UserEmail::find(
+  $user_email = UserEmail::find(
     where: ['username'=> $user->username,'email' => trim(strtolower($email))]
   );
   if ($user_email) {
@@ -130,7 +128,7 @@ function check_email_unique(string $email):bool {
   }
 
   // check if email is in use by another user
-  $user_email = \Link\UserEmail::find(where: ['email' => trim(strtolower($email))]);
+  $user_email = UserEmail::find(where: ['email' => trim(strtolower($email))]);
   return !is_null($user_email); // if we found one it is not unique
 }
 

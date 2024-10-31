@@ -41,7 +41,7 @@ $api = [
 // Output the configuration as an array (if needed for debugging)
 define( 'SETTINGS', [
     'base_url' => $base_url,
-    'default_url' => $default_url,
+    'default_url' => $SETTINGS['default_url'],
     'db' => $db,
     'api' => $api,
     'log' => $log,

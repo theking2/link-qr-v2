@@ -1,4 +1,9 @@
 <?php declare(strict_types=1);
+require_once '../config.php';
+require_once ROOT . 'inc/session.inc.php';
+require_once ROOT . 'inc/utils.inc.php';
+
+use \Kingsoft\LinkQr\{User, UserEmail};
 
 const SEND_PWD_TEMPLATE = '<html>
 <head>
@@ -13,9 +18,6 @@ h1{color:#ff9f35;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-si
 <p>Mit freundlichen Grüssen<br />
 </body></html>';
 
-require_once '../inc/settings.inc.php';
-require_once '../inc/utils.inc.php';
-
 $title = 'Set password';
 $messages = [];
 
@@ -25,7 +27,7 @@ if (!isset($_GET['vc']) || !isset($_GET['username'])) {
 $uuid = $_GET['vc'];
 $username = $_GET['username'];
 
-$user_email = \Link\UserEmail::find(where: ['uuid' => $uuid, 'username' => $username]);
+$user_email = UserEmail::find(where: ['uuid' => $uuid, 'username' => $username]);
 if (is_null($user_email)) {
   $username = $_GET['username'];
   $messages[] = sprintf("User %s not found", $username);
@@ -35,9 +37,9 @@ if (is_null($user_email)) {
 }
 
 if (isset($_POST['password'])) {
-  $user = \Link\User::find(where: ['username'=> $username]);
+  $user = User::find(where: ['username'=> $username]);
   if(is_null($user)) {
-    $user = new \Link\User();
+    $user = new User();
     $user-> username = $username;
     $user-> vorname = $user-> nachname = "";
     $user-> last_login = null;
