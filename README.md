@@ -64,13 +64,7 @@ define( 'SETTINGS', [
 	  );
 	}
   
-	/**
-	 * Create a new UUID for this user
-	 */
-	public function createUUID()
-	{
-	  $this-> __set( 'uuid', base64url_encode(random_bytes(48)) );
-	}
+
 	/**
 	 * Set the hash for this user's password
 	 */
@@ -87,7 +81,18 @@ define( 'SETTINGS', [
 	}
   
 ```
- 5. Logon and register should work now. 
+ 5. update the UserEmail.php with this:
+
+```php
+	/**
+	 * Create a new UUID for this user
+	 */
+	public function createUUID()
+	{
+	  $this-> __set( 'uuid', base64url_encode(random_bytes(48)) );
+	}
+```
+ 6. Logon and register should work now. 
 
 ## Tables and views
 ```sql
