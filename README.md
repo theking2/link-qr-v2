@@ -1,10 +1,11 @@
 # link-qr
-# Config
+## Config
 Create a file `/config.php` with this content
 ```php
 <?php
 define('ROOT', __DIR__ . '/');
 
+(function() {
 // Base URL and Default URL
 $base_url = 'http://link-qr.localhost/';
 $default_url = 'https://de.wikipedia.org/';
@@ -38,7 +39,7 @@ $api = [
     'allowedmethods' => [ 'GET', 'POST', 'PUT', 'DELETE' ]
 ];
 
-// Output the configuration as an array (if needed for debugging)
+// Store the configuration as an const array
 define( 'SETTINGS', [
     'base_url' => $base_url,
     'default_url' => $SETTINGS['default_url'],
@@ -47,13 +48,13 @@ define( 'SETTINGS', [
     'log' => $log,
     'logrotate' => $logrotate
 ]);
-
+})();
 ```
 
 ## discover
  1. Open `/vendor/kingsoft/persist-db/discover.php` to generate the class files.
- 2. Copy the files to the root folder `/classes`
- 3. Copy the composer.json section to the `composer.json` file and run `composer dump-autoload`
+ 2. Copy the files from `/discovered` to a new folder `/classes`
+ 3. Copy the composer.json section to the `composer.json` file, replace `discovered` with `classes` and run `composer dump-autoload`
  4. update the User.php with this:
 
 ```php
@@ -185,7 +186,7 @@ DELIMITER ;
 ##
 Watch live on [go321.eu](https://go321.eu) or[go321.ch](https://go321.ch)
 
-[beispiel](http://go321.eu/aaaaa)
+[beispiel](http://go321.eu/yesno)
 
 ![image](https://github.com/theking2/link-qr/assets/1612152/d3e2dce5-ed13-4a95-b5a9-dcd814dcfb66)
 
