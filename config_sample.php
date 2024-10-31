@@ -1,5 +1,6 @@
 <?php
-define('ROOT', __DIR__ . '/');
+define( 'ROOT', __DIR__ . '/' );
+define( 'DEBUG', str_ends_with( $_SERVER[ 'SERVER_NAME' ], 'localhost' ) );
 
 // Base URL and Default URL
 $base_url = 'http://link-qr.localhost/';

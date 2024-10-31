@@ -21,9 +21,8 @@ $log->pushProcessor( function ($record) {
 	$record[ 'extra' ][ 'sessionId' ] = substr( session_id(), 0, 8 );
 	return $record;
 } );
-/**
- * @global Monolog\Logger LOG - the logger
- */
+
+// make the logger available to the rest of the application
 define( 'LOG', $log );
 
 \Monolog\ErrorHandler::register( LOG );
@@ -36,11 +35,15 @@ set_error_handler( function ($errno, $errstr, $errfile, $errline) {
 	switch( $errno ) {
 		default:
 			LOG->error( "Unknown error type: [$errno] $errstr", [ 'file' => $errfile, '@' => $errline ] );
-			break;
+			exit( 1 );
 		case E_USER_ERROR: // fall through
 		case E_WARNING: // PHP Warnings are errors
 			LOG->error( $errstr, [ 'file' => $errfile, '@' => $errline ] );
-			break;
+			exit( 1 );
+		case E_ERROR: // fall through
+		case E_RECOVERABLE_ERROR:
+			LOG->critical( $errstr, [ 'file' => $errfile, '@' => $errline ] );
+			exit( 1 );
 		case E_USER_DEPRECATED:
 		case E_DEPRECATED:
 			LOG->error( "DEPRECATED $errstr", [ 'file' => $errfile, '@' => $errline ] );
@@ -51,10 +54,6 @@ set_error_handler( function ($errno, $errstr, $errfile, $errline) {
 			break;
 		case E_USER_NOTICE:
 			LOG->notice( $errstr, [ 'file' => $errfile, '@' => $errline ] );
-			break;
-		case E_ERROR: // fall through
-		case E_RECOVERABLE_ERROR:
-			LOG->critical( $errstr, [ 'file' => $errfile, '@' => $errline ] );
 			break;
 
 	}
