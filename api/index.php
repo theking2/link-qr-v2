@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
-
 require_once '../config.php';
-// setup session
 require_once ROOT . 'inc/session.inc.php';
-// load utils
 require_once ROOT . 'inc/utils.inc.php';
 
 use Kingsoft\Http\{StatusCode, Response};
